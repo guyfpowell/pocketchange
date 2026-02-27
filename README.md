@@ -1,7 +1,7 @@
 # PocketChange
 
 A full-stack monorepo application (work in progress) for managing donations, wallets, and QR code payments.  
-Currently includes **shared** and **backend** workspaces with TypeScript support.
+Currently includes **shared**, **backend**, and **frontend** workspaces with TypeScript support.
 
 ---
 
@@ -11,7 +11,7 @@ Currently includes **shared** and **backend** workspaces with TypeScript support
 pocketchange/
 ├─ backend/        # Backend workspace (Express + TypeScript)
 ├─ shared/         # Shared TypeScript workspace (schemas, types, utils)
-├─ frontend/       # Frontend workspace (Next.js + TypeScript) – planned
+├─ frontend/       # Frontend workspace (Next.js + TypeScript)
 ├─ package.json    # Monorepo root, npm workspaces
 ├─ tsconfig.base.json  # Base TypeScript config
 ├─ README.md
@@ -53,7 +53,31 @@ npm run build
 npm run dev
 ```
 
-- Example route: `GET /` → returns `"Backend is working!"`
+- Example routes:
+  - `GET /` → "Backend is working!"
+  - `GET /api/health` → "Backend is reachable!" ✅
+
+---
+
+### Frontend (Minimal Setup)
+
+- Workspace: `@pocketchange/frontend`
+- Next.js + TypeScript
+- Minimal pages and layout created:
+  - `src/app/layout.tsx` — Root layout
+  - `src/app/page.tsx` — Homepage displays backend status
+  - `src/lib/api.ts` — Axios instance pointing to `http://localhost:4000`
+- Scripts:
+
+```bash
+# Install dependencies
+npm install
+
+# Start frontend dev server
+npm run dev
+```
+
+- Test: Visit [http://localhost:3000](http://localhost:3000) → should display "Backend is reachable!"  
 
 ---
 
@@ -66,32 +90,40 @@ git clone https://github.com/guyfpowell/pocketchange.git
 cd pocketchange
 ```
 
-2. Install workspace dependencies (run in each workspace):
+2. Install workspace dependencies:
 
 ```bash
+# Shared
 cd shared
 npm install
 npm run build
 
+# Backend
 cd ../backend
 npm install
 npm run build
 npm run dev
+
+# Frontend
+cd ../frontend
+npm install
+npm run dev
 ```
 
-3. Verify backend is running:
+3. Verify:
 
-Visit [http://localhost:4000](http://localhost:4000) in your browser — should display `"Backend is working!"`.
+- Backend: [http://localhost:4000](http://localhost:4000) → "Backend is working!"  
+- Frontend: [http://localhost:3000](http://localhost:3000) → "Backend is reachable!"  
 
 ---
 
 ## Next Steps
 
-- Setup **frontend workspace** with Next.js + Chakra UI
-- Add **Prisma schema and migrations**
-- Add **API routes, controllers, and services**
-- Integrate **Redis + JWT authentication**
-- Add **Docker support** for full-stack deployment
+- Generate backend modules (users, vendors, donations) with Claude Code
+- Generate frontend pages/hooks for each module
+- Add Prisma schema and migrations
+- Integrate Redis + JWT authentication
+- Add Docker support for full-stack deployment
 
 ---
 
@@ -99,6 +131,7 @@ Visit [http://localhost:4000](http://localhost:4000) in your browser — should 
 
 - Node.js v24+ recommended
 - Mac users: `.DS_Store` ignored globally
-- `node_modules/` and `dist/` are ignored in Git
+- `node_modules/`, `dist/`, `.next/` are ignored in Git
 - Monorepo uses **npm workspaces**
+- Current frontend is minimal; future pages will use Chakra UI and TanStack Query
 

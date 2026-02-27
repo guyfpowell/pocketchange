@@ -1,0 +1,5 @@
+{
+  "name": "pocketchange",
+  "private": true,
+  "workspaces": ["backend", "frontend", "shared"]
+}

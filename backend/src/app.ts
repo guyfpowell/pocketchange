@@ -4,8 +4,8 @@ import helmet from "helmet";
 import cors from "cors";
 import rateLimit from "express-rate-limit";
 import { env } from "./config/env";
-import { prisma } from "./lib/prisma";
 import { errorHandler } from "./middleware/errorHandler";
+import authRouter from "./modules/auth/auth.routes";
 
 const app = express();
 
@@ -31,14 +31,7 @@ app.get("/api/health", (req, res) => {
   res.json({ status: "ok" });
 });
 
-app.get("/api/users", async (req, res, next) => {
-  try {
-    const users = await prisma.user.findMany();
-    res.json(users);
-  } catch (err) {
-    next(err);
-  }
-});
+app.use("/api/auth", authRouter);
 
 app.use(errorHandler);
 

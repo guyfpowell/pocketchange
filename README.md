@@ -70,17 +70,21 @@ pocketchange/
 | Monorepo + Docker (Postgres + Redis) | Done |
 | Prisma schema + migrations | Done |
 | Express server skeleton | Done |
-| Config layer (`env.ts`, `jwt.ts`) | Done |
+| Config layer (`env.ts`, `jwt.ts`, `redis.ts`) | Done |
 | Middleware (`authenticate`, `authorize`, `validate`, `errorHandler`) | Done |
 | Express type extensions (`req.user`) | Done |
+| Auth module (register, login, refresh, logout) | Done |
+| Shared Zod schemas (`auth.schema.ts`) | Done |
 
 ### Backend routes (current)
 - `GET /` — health ping
 - `GET /api/health` — `{ status: "ok" }`
-- `GET /api/users` — all users from DB
+- `POST /api/auth/register` — create account (DONOR or VENDOR)
+- `POST /api/auth/login` — returns `{ accessToken, refreshToken }`
+- `POST /api/auth/refresh` — exchange refresh token for new access token
+- `POST /api/auth/logout` — revoke session (requires Bearer token)
 
 ### In progress
-- Auth module (`POST /api/auth/register`, `POST /api/auth/login`)
 - Users, Vendors, Donations, Admin modules
 - Frontend
 
@@ -188,8 +192,8 @@ Prisma schema (`backend/prisma/schema.prisma`) defines:
 
 - [x] Monorepo + Docker
 - [x] Prisma schema + migrations
-- [x] Config + middleware layer (JWT, Zod, error handling)
-- [ ] Auth module (register, login, refresh, logout)
+- [x] Config + middleware layer (JWT, Zod, Redis, error handling)
+- [x] Auth module (register, login, refresh, logout)
 - [ ] Users module (profile, wallet, top-up)
 - [ ] Stripe webhook + wallet top-up flow
 - [ ] Vendors module + QR code generation

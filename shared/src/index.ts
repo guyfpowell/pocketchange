@@ -1,1 +1,1 @@
-export const sharedReady = true;
+export * from "./schemas/auth.schema";

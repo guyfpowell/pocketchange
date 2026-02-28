@@ -10,6 +10,7 @@
     "db:migrate": "prisma migrate dev"
   },
   "dependencies": {
+    "@pocketchange/shared": "^1.0.0",
     "@prisma/client": "^6.19.2",
     "bcrypt": "^5",
     "cors": "^2",

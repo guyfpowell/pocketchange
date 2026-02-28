@@ -586,7 +586,7 @@ Final README: mark full roadmap complete, update setup guide. Commit, push.
 
 ## Chunk 7a — Brand Setup: Tailwind, Navbar, Sign-in Page ✅ DONE
 
-**Commit:** *(this session — see git log)*
+**Commit:** `8329047`
 
 **Delivered:**
 - `frontend/tailwind.config.ts` — brand color tokens (`brand.teal`, `brand.blue`, `brand.vivid`, `brand.bg`), Poppins font, card/btn/input border-radius, card shadow

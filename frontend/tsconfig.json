@@ -4,6 +4,7 @@
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
+      "@/*": ["./src/*"],
       "@pocketchange/shared/*": [
         "../shared/src/*"
       ]

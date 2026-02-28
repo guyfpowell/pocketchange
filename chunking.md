@@ -574,9 +574,52 @@ Final README: mark full roadmap complete, update setup guide. Commit, push.
 | 4 | Vendors + QR Codes | vendors.*, qrcodes.* | ⬜ |
 | 5 | Donations + Stripe webhook | donations.*, stripe.webhook.ts | ⬜ |
 | 6 | Admin module + Jest tests | admin.*, __tests__/* | ⬜ |
-| 7 | Frontend bootstrap + Auth pages | providers, api.ts, auth store, login/register | ⬜ |
+| 7a | Brand setup: Tailwind, Navbar, sign-in page | tailwind.config.ts, Navbar.tsx, sign-in/page.tsx | ✅ Done (this session) |
+| 7b | Frontend bootstrap + Auth wiring | providers, api.ts, auth store, login/register | ⬜ |
 | 8 | Donor dashboard | WalletCard, scan, transactions | ⬜ |
 | 9 | Vendor dashboard | BalanceCard, QRCodeCard | ⬜ |
 | 10 | Admin panel + final polish | admin tables, analytics charts | ⬜ |
 
 **Total remaining: 8 chunks**
+
+---
+
+## Chunk 7a — Brand Setup: Tailwind, Navbar, Sign-in Page ✅ DONE
+
+**Commit:** *(this session — see git log)*
+
+**Delivered:**
+- `frontend/tailwind.config.ts` — brand color tokens (`brand.teal`, `brand.blue`, `brand.vivid`, `brand.bg`), Poppins font, card/btn/input border-radius, card shadow
+- `frontend/postcss.config.mjs` — Tailwind + autoprefixer
+- `frontend/src/app/globals.css` — Tailwind directives, `.btn-primary`, `.btn-outline`, `.input-field`, `.card` component classes
+- `frontend/src/app/layout.tsx` — Poppins via `next/font/google`, favicon set to `/branding.png`, global CSS imported
+- `frontend/src/components/ui/Navbar.tsx` — fixed top, logo (Logo.png), desktop nav links, animated hamburger for mobile, responsive
+- `frontend/src/app/auth/sign-in/page.tsx` — full-bleed vivid blue background with SVG illustration (phone + coin), centered white card, email/password inputs, remember me checkbox, sign-in button + forgot password link, register link
+- `frontend/src/app/page.tsx` — server-side `redirect("/auth/sign-in")`
+- `frontend/tsconfig.json` — added `@/*` → `./src/*` path alias
+- `frontend/public/logo.png` + `frontend/public/branding.png` — brand assets copied
+
+**Assets:**
+- `/public/logo.png` → horizontal logo → used in Navbar
+- `/public/branding.png` → icon only → used as favicon
+
+**Deviations from plan:**
+- This chunk was inserted between Chunks 2 and original Chunk 7 due to brand/design requirements.
+- Replaced Chakra UI as the primary styling system with Tailwind CSS v3 (Chakra UI packages remain in package.json but provider not initialised).
+- Sign-in page illustration is an inline SVG approximation; original mockup used a stock illustration asset.
+- Auth form wiring deferred to Chunk 7b (no API calls yet, form is UI shell only).
+
+**Session prompt for Chunk 7b:**
+```
+Continue PocketChange frontend. Brand/Tailwind/Navbar already set up. Read: frontend/src/app/auth/sign-in/page.tsx, frontend/src/components/ui/Navbar.tsx, frontend/tailwind.config.ts, shared/src/schemas/auth.schema.ts.
+
+Implement Chunk 7b — Frontend Auth Wiring:
+- frontend/src/store/auth.store.ts (Zustand: user, accessToken, refreshToken, setAuth, clearAuth + localStorage)
+- frontend/src/types/index.ts (User, Vendor, Transaction, Donation interfaces)
+- frontend/src/lib/api.ts (update: Bearer interceptor, 401 refresh-retry)
+- frontend/src/hooks/useAuth.ts (useLogin, useRegister, useLogout TanStack Query mutations)
+- Wire sign-in/page.tsx form to useLogin hook
+- frontend/src/app/auth/register/page.tsx (matching sign-in page style, DONOR/VENDOR role selector)
+
+Install: zustand, @tanstack/react-query. No any types. Full file contents. Update README, chunking.md, commit, push.
+```

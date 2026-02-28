@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: "Poppins", sans-serif;
+  }
+
+  body {
+    @apply bg-brand-bg text-brand-teal;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-bold text-brand-teal tracking-heading uppercase;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-brand-teal text-white font-bold uppercase tracking-heading
+           px-6 py-2.5 rounded-btn hover:bg-brand-teal-dark
+           transition-colors duration-150 focus:outline-none
+           focus:ring-2 focus:ring-brand-blue focus:ring-offset-2;
+  }
+
+  .btn-outline {
+    @apply border-2 border-brand-teal text-brand-teal font-bold uppercase tracking-heading
+           px-6 py-2.5 rounded-btn hover:bg-brand-teal hover:text-white
+           transition-colors duration-150 focus:outline-none
+           focus:ring-2 focus:ring-brand-blue focus:ring-offset-2;
+  }
+
+  .input-field {
+    @apply w-full px-4 py-2.5 rounded-input border border-gray-200
+           bg-white text-brand-teal placeholder-gray-400
+           focus:outline-none focus:ring-2 focus:ring-brand-blue
+           focus:border-transparent transition-shadow duration-150;
+  }
+
+  .card {
+    @apply bg-white rounded-card shadow-card;
+  }
+}

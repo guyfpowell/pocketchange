@@ -53,7 +53,9 @@ pocketchange/
 ### Frontend
 - Next.js 15 (App Router)
 - TypeScript
-- Axios, TanStack Query, Zustand, Chakra UI
+- Tailwind CSS v3 — primary styling (brand token config)
+- Poppins (Google Fonts) — typography
+- Axios, TanStack Query, Zustand (wired in Chunk 7b)
 
 ### Monorepo
 - npm workspaces
@@ -75,6 +77,8 @@ pocketchange/
 | Express type extensions (`req.user`) | Done |
 | Auth module (register, login, refresh, logout) | Done |
 | Shared Zod schemas (`auth.schema.ts`) | Done |
+| Frontend: Tailwind brand tokens + Navbar | Done |
+| Frontend: Sign-in page (matches mockup) | Done |
 
 ### Backend routes (current)
 - `GET /` — health ping
@@ -194,6 +198,8 @@ Prisma schema (`backend/prisma/schema.prisma`) defines:
 - [x] Prisma schema + migrations
 - [x] Config + middleware layer (JWT, Zod, Redis, error handling)
 - [x] Auth module (register, login, refresh, logout)
+- [x] Frontend: Tailwind brand config, Navbar, sign-in page
+- [ ] Frontend: Auth wiring (Zustand, TanStack Query, register page)
 - [ ] Users module (profile, wallet, top-up)
 - [ ] Stripe webhook + wallet top-up flow
 - [ ] Vendors module + QR code generation

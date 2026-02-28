@@ -2,7 +2,15 @@
 
 > Each chunk is one conversation session, sized for a ~40k token window.
 > Token budget per chunk: ~8k context reads + ~20k generation + ~5k overhead = ~33k used.
-> Every chunk ends: save all files → update README → commit → push.
+> Every chunk ends: save all files → update README → update chunking.md → commit → push.
+
+> **Standing instruction (repeat at end of every chunk):**
+> After completing each chunk, update this file:
+> 1. Mark the completed chunk header with ✅ and add "DONE" status
+> 2. Add the actual git commit hash to the chunk's "Commit:" line
+> 3. Note any deviations from the plan (different approach taken, files skipped, extra files added)
+> 4. Update the Summary table at the bottom
+> 5. Update "Total remaining" count
 
 ---
 
@@ -23,7 +31,24 @@
 
 ---
 
-## Chunk 2 — Auth Module + Redis
+## Chunk 2 — Auth Module + Redis ✅ DONE
+
+**Commit:** `1a938c0`
+
+**Delivered:**
+- `backend/src/config/redis.ts` — ioredis client (lazy connect), storeRefreshToken/getRefreshToken/deleteRefreshToken
+- `shared/src/schemas/auth.schema.ts` — registerSchema, loginSchema, refreshSchema + inferred types
+- `shared/src/index.ts` — re-exports all schemas; built to dist
+- `backend/src/modules/auth/auth.service.ts` — register, login, refresh, logout
+- `backend/src/modules/auth/auth.controller.ts`
+- `backend/src/modules/auth/auth.routes.ts` — POST /register /login /refresh /logout
+- `backend/src/app.ts` — removed placeholder `/api/users`, mounted authRouter
+- `@pocketchange/shared` added as workspace dependency in backend
+
+**Deviations from plan:**
+- Refresh tokens implemented as **JWT + Redis revocation flag** (not opaque bcrypt hash). Reason: bcrypt has a 72-byte input limit; refresh JWTs exceed this. Redis stores `"1"` at `refresh:<userId>` as a revocation key — logout deletes it, refresh checks for its existence. Functionally equivalent but simpler.
+- `refreshSchema` added to shared schemas (not in original plan) — needed for validate() middleware on /refresh route.
+- `shared/src/schemas/` path used (not `shared/schemas/` as listed in scafolding.md).
 
 **Goal:** Full auth flow: register, login, logout, refresh.
 
@@ -543,8 +568,8 @@ Final README: mark full roadmap complete, update setup guide. Commit, push.
 
 | Chunk | Scope | Key files | Status |
 |---|---|---|---|
-| 1 | Monorepo, Docker, Prisma, Config, Middleware | env.ts, jwt.ts, middleware/* | ✅ Done |
-| 2 | Auth module + Redis | redis.ts, auth.service/controller/routes | ⬜ |
+| 1 | Monorepo, Docker, Prisma, Config, Middleware | env.ts, jwt.ts, middleware/* | ✅ Done `e5082bd` |
+| 2 | Auth module + Redis | redis.ts, auth.service/controller/routes | ✅ Done `1a938c0` |
 | 3 | Users module | users.service/controller/routes | ⬜ |
 | 4 | Vendors + QR Codes | vendors.*, qrcodes.* | ⬜ |
 | 5 | Donations + Stripe webhook | donations.*, stripe.webhook.ts | ⬜ |
@@ -554,4 +579,4 @@ Final README: mark full roadmap complete, update setup guide. Commit, push.
 | 9 | Vendor dashboard | BalanceCard, QRCodeCard | ⬜ |
 | 10 | Admin panel + final polish | admin tables, analytics charts | ⬜ |
 
-**Total remaining: 9 chunks**
+**Total remaining: 8 chunks**
